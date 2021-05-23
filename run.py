@@ -14,7 +14,7 @@ import numpy as np
 #  Pythonファイルインポート 
 import ovturning as OVT         # 2次元最適速度モデル関係
 #import pixy_210416 as PIXY_py       # Pixyカメラ関係
-import picam_210522a as PICAM_py # picamera関係
+import picam as PICAM_py # picamera関係
 import modules.motor5a as mt         #  モーターを回転させるためのモジュール
 #import modules.vl53_4a as lidar     #  赤外線レーザーレーダ 3つの場合
 import modules.vl53_3a as lidar      #  赤外線レーザーレーダ 2つの場合
