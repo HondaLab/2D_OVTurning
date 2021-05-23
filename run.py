@@ -125,6 +125,12 @@ print(" dist(m) theta(rad)",end="")
 print("  vL",end="")
 print("      vR",end="")
 print("    vL/vR")
+string="# time"
+string+="    dist"
+string+="   theta"
+string+="      vl"
+string+="      vr \n"
+out.write(string)
 key=cv2.waitKey(1)
 while key!=ord("q"):
     dist,theta,frame = picam.calc_dist_theta(lower_light, upper_light)
@@ -168,8 +174,11 @@ while key!=ord("q"):
         print(" %6.2f " % vr, end="")
         print(" %7.3f " % (vl/vr),end="")
 
-        string=str(now-start)+','
-        string+=str(dist)+'\n'
+        string="{0:6.2f}, ".format(now-start)
+        string+="{0:6.3f}, ".format(dist)
+        string+="{0:6.3f}, ".format(theta)
+        string+="{0:6.3f}, ".format(vl)
+        string+="{0:6.3f}\n".format(vr)
         out.write(string)
 
     vl = vl * MAX_SPEED
