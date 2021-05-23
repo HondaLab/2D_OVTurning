@@ -12,7 +12,7 @@ import sys
 import cv2
 import numpy as np
 #  Pythonファイルインポート 
-import ovm_210522b as OVM_py          # 2次元最適速度モデル関係
+import ovtuning as OVT         # 2次元最適速度モデル関係
 #import pixy_210416 as PIXY_py       # Pixyカメラ関係
 import picam_210522a as PICAM_py # picamera関係
 import modules.motor5a as mt         #  モーターを回転させるためのモジュール
@@ -83,7 +83,7 @@ file_pointer = open(FILE,'r')
 parm = Parameter_read(file_pointer)
 
 #  インスタンス生成
-ovm = OVM_py.Optimal_Velocity_class(parm)         #  2次元最適速度モデル関係
+ovt = OVT.Optimal_Velocity_class(parm)         #  2次元最適速度モデル関係
 #tofR,tofL,tofC=lidar.start() #  赤外線レーザ(3)
 tofL,tofR=lidar.start()       #  赤外線レーザ(2)
 print("VL53L0X 接続完了\n")
@@ -131,7 +131,7 @@ while key!=ord("q"):
         mode = "picam"
         dist = float(dist)
         # pixyカメラで物体を認識している時
-        vl, vr, show1,show2 = ovm.calc(dist,theta,dt)
+        vl, vr = ovt.calc(dist,theta,dt)
 
     else:
         pass
@@ -165,8 +165,6 @@ while key!=ord("q"):
         print(" %6.2f " % vl, end="")
         print(" %6.2f " % vr, end="")
         print(" %7.3f " % (vl/vr),end="")
-        print(" %8.6f " % (show1),end="")
-        print(" %8.6f " % (show2),end="")
 
     vl = vl * MAX_SPEED
     vr = vr * MAX_SPEED
