@@ -186,8 +186,6 @@ while key!=ord("q"):
     key=cv2.waitKey(1)
     #time.sleep(DT)
 
-
-
 mR.stop()
 mL.stop()
 
