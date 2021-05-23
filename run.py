@@ -1,5 +1,5 @@
 #! /usr/bin/python3
-#  2dovr1a_220522a CC BY-SA Yasushi Honda 2021 5/22
+#  run.py CC BY-SA Yasushi Honda 2021 5/23
 #  2dovr_210513.py
 #  2021-04-16
 #  Masashi Yamada
