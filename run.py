@@ -12,7 +12,7 @@ import sys
 import cv2
 import numpy as np
 #  Pythonファイルインポート 
-import ovtuning as OVT         # 2次元最適速度モデル関係
+import ovturning as OVT         # 2次元最適速度モデル関係
 #import pixy_210416 as PIXY_py       # Pixyカメラ関係
 import picam_210522a as PICAM_py # picamera関係
 import modules.motor5a as mt         #  モーターを回転させるためのモジュール
