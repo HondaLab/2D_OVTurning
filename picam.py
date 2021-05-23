@@ -1,5 +1,5 @@
 #! /usr/bin/python3
-# CC BY-SA Yasushi Honda 2021 5/22
+# CC BY-SA Yasushi Honda 2021 5/23
 # 変更者：山田将司 2021/04/25
 # 各種パッケージ，ソースコードをインポート
 # CC BY-SA Yasushiu Honda 2018 12/15
@@ -101,7 +101,7 @@ class PI_CAMERA_CLASS():
          height = self.data[3]
          cpx = px + (width/2)
          cpy = py + (height/2)
-         rad = (160-cpx)*(52/160)*(np.pi/180)
+         rad = -(160-cpx)*(52/160)*(np.pi/180)
          angle = np.rad2deg(rad)
          dis = (self.A/(width**self.C)) + self.B + (self.D*(abs(rad)**self.E))
          dis = float(dis/100)

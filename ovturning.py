@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# ovm_210522a CC BY-SA Yasushi Honda 2021 5/22
+# ovturning CC BY-SA Yasushi Honda 2021 5/22
 """
 作成日：2020/10/31
 更新日：2021/04/16
@@ -69,48 +69,27 @@ class Optimal_Velocity_class:
         self.beta = parm[3]  #αβで最適速度関数の変化率を決定
         self.b = parm[4]     #変曲点のx座標(ロボットの車頭距離にする)
         self.c = parm[5]     #前進後退の割合決定
-        self.d = 0.2        # ロボットの半径(m)
-        self.vx = 0.0
-        self.vy = 0.1
+        self.d = 1.0        # ロボットの半径(m)
+        self.v = 0.1
+        self.omega = 0.0
         print("#    a  alpha   beta      b      c      d")
         print("%6.2f %6.2f %6.2f %6.2f %6.2f %6.2f" % (self.a,self.alpha,self.beta,self.b,self.c,self.d))
 
     def calc(self,distance,theta,dt):
 
-        f_rkj = self.alpha*(tanh(self.beta*(distance - self.b)) + self.c ) #(3)式
+        f = self.alpha*(tanh(self.beta*(distance - self.b)) + self.c )
+        ov = (1.0+cos(theta)) * f
 
-        nx = sin(theta)
-        ny = cos(theta)
+        a = self.a*(self.vs + ov - self.v)
 
-        ovx = (1+cos(theta)) * f_rkj * nx
-        ovy = (1+cos(theta)) * f_rkj * ny
+        self.v = self.v + dt*a
+        self.omega = self.omega + dt*self.a*(theta-self.omega)
 
-        ax = self.a * (self.vs + ovx - self.vx)
-        ay = self.a * (self.vs + ovy - self.vy)
+        left  = self.v + self.d *self.omega
+        right = self.v - self.d *self.omega 
 
-        vx_next = self.vx + dt * ax
-        vy_next = self.vy + dt * ay
-
-        v = sqrt_2(self.vx,self.vy) 
-        v_next = sqrt_2(vx_next,vy_next)
-
-        if v*v_next>0.020:# 速度ベクトルが小さすぎるときは d_theta=0
-           out_z = vx_next * self.vy - vy_next * self.vx
-           inner_v = self.vx * vx_next + self.vy * vy_next
-           in_acos = (inner_v/(v*v_next))
-           d_theta = sgn(out_z)*np.arccos(in_acos)
-        else:
-           d_theta=0.0
-
-        d_theta=theta
-        right = self.vy - (self.d * ( d_theta / dt) ) 
-        left = self.vy + (self.d * ( d_theta / dt) )  
-
-        self.vx = vx_next
-        self.vy = vy_next
-        
         # |left|<1, |right|<1 に規格化
         left = left/(2.0*self.alpha*(1+self.c))
         right = right/(2.0*self.alpha*(1+self.c))
         
-        return left,right,d_theta,dt
+        return left,right
