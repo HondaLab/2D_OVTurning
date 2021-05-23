@@ -19,3 +19,4 @@
   * modules/: motor5a.py など
   * ovt.py: Optimal Velocity Turning のクラス記述
   * parm.csv: OV model パラメータ
+  * stop.py: ロボットの緊急停止
