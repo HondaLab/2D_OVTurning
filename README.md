@@ -14,4 +14,8 @@
   * vR = v - r g omega
   * g: スリップを考慮したゲイン
 ## 構成
-  * 
+  * run.py: このプログラムを実行する
+  * picam.py: picameraでd,thetaを求めるクラス記述
+  * modules/: motor5a.py など
+  * ovt.py: Optimal Velocity Turning のクラス記述
+  * parm.csv: OV model パラメータ
