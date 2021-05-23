@@ -27,6 +27,7 @@ print("# ２次元最適速度ロボット、走行プログラム")
 
 select_hsv = "y"
 show_period = 0.1
+output_file="result.xy"
 
 SLEEP = 0.2
 EX_TIME = 3    #  (min)
@@ -91,8 +92,9 @@ print("VL53L0X 接続完了\n")
 picam =PICAM_py.PI_CAMERA_CLASS() 
 print("picamera 接続完了\n")
 
+out=open(output_file,"w")
 
-time.sleep(2)
+#time.sleep(2)
 mL=mt.Lmotor(GPIO_L)         #  左モーター(gpio17番)
 mR=mt.Rmotor(GPIO_R)         #  右モーター(gpio18番)
 
@@ -166,6 +168,10 @@ while key!=ord("q"):
         print(" %6.2f " % vr, end="")
         print(" %7.3f " % (vl/vr),end="")
 
+        string=str(now-start)+','
+        string+=str(dist)+'\n'
+        out.write(string)
+
     vl = vl * MAX_SPEED
     vr = vr * MAX_SPEED
     if vl > 100:  # 左モータに対する
@@ -182,12 +188,15 @@ while key!=ord("q"):
        mL.run(vl)
        mR.run(vr)
 
+
     cv2.imshow("frame",frame)
     key=cv2.waitKey(1)
     #time.sleep(DT)
 
 mR.stop()
 mL.stop()
+
+out.close()
 
 print("\n")
 print("===============================")
