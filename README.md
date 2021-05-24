@@ -1,13 +1,17 @@
 このレポジトリは，2ホイール，またはスキッドステアロボットのための自律走行プログラムを開発するためのものです．
+
 <img src='https://github.com/HondaLab/2D_OVTurning/blob/honda/SSR2.JPG' width=600>
+
 前面に設置されたpicamera画像から色オブジェクトまでの相対距離dと相対角度thetaの値を検出します．
 それらの値を基に，最適速度(Optimal Velocity)で左右のホイール速度 vL,vRを決めるアルゴリズムです．
 (2021 5/23)
 
 
 ## Optimal Velocity Turning Algorithm (OVT)
-<img src='https://github.com/HondaLab/2D_OVTurning/blob/honda/OVTurning.JPG' width=600>
 速度ベクトルを，速度の大きさ v と 旋回角速度 omegaで表す．
+
+<img src='https://github.com/HondaLab/2D_OVTurning/blob/honda/OVTurning.JPG' width=600>
+
 Picameraによる観測値は，dist, theta．
   * d,theta=picam.calc_dist_theta()
   * f = alpha[tanh{beta(d-b)}+c]
