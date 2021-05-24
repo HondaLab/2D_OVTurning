@@ -35,5 +35,3 @@ vL,vRの値が左右のモーターに与える出力値．
 ## 実行結果例
 <img src='https://github.com/HondaLab/2D_OVTurning/blob/honda/result.png' width=600>
   
-## ライセンス
-[CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/deed.ja)
