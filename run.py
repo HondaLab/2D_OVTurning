@@ -19,11 +19,10 @@ import modules.motor5a as mt         #  モーターを回転させるための�
 #import modules.vl53_4a as lidar     #  赤外線レーザーレーダ 3つの場合
 import modules.vl53_3a as lidar      #  赤外線レーザーレーダ 2つの場合
 
-#sokcet tuusinn kannkei
 import socket
 #import socket1a as sk
 
-print("# ２次元最適速度ロボット、走行プログラム")
+print("# 2D Optimal Velocity Turning 走行プログラム")
 
 select_hsv = "y"
 show_period = 0.1
