@@ -3,6 +3,8 @@
 それらの値を基に，最適速度(Optimal Velocity)で左右のホイール速度 vL,vRを決めるアルゴリズムです．
 (2021 5/23)
 
+<img src='https://github.com/HondaLab/2D_OVTurning/blob/honda/OVTuring.JPG' width=600>
+
 ## Optimal Velocity Turning Algorithm (OVT)
 速度ベクトルを，速度の大きさ v と 旋回角速度 omegaで表す．
 Picameraによる観測値は，dist, theta．
