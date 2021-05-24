@@ -5,6 +5,7 @@
 
 ## Optimal Velocity Turning Algorithm
 速度ベクトルを，速度の大きさ v と 旋回角速度 omegaで表す．
+Picameraによる観測値は，dist, theta．
   * d,theta=picam.calc_dist_theta()
   * f = alpha[tanh{beta(d-b)}+c]
   * V = (1+cos theta) f
@@ -13,6 +14,7 @@
   * vL = v + r g omega  
   * vR = v - r g omega
   * g: スリップを考慮したゲイン
+vL,vRの値が左右のモーターに与える出力値．
 ## 構成
   * run.py: このプログラムを実行する
   * picam.py: picameraでd,thetaを求めるクラス記述
