@@ -14,7 +14,9 @@ Picameraによる観測値は，dist, theta．
   * vL = v + r g omega  
   * vR = v - r g omega
   * g: スリップを考慮したゲイン
+
 vL,vRの値が左右のモーターに与える出力値．
+
 ## 構成
   * run.py: このプログラムを実行する
   * picam.py: picameraでd,thetaを求めるクラス記述
