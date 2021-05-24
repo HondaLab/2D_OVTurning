@@ -69,11 +69,11 @@ class Optimal_Velocity_class:
         self.beta = parm[3]  #αβで最適速度関数の変化率を決定
         self.b = parm[4]     #変曲点のx座標(ロボットの車頭距離にする)
         self.c = parm[5]     #前進後退の割合決定
-        self.d = 1.0        # ロボットの半径(m)
+        self.g = 1.0        # ロボットの半径(m)
         self.v = 0.1
         self.omega = 0.0
         print("#    a  alpha   beta      b      c      d")
-        print("%6.2f %6.2f %6.2f %6.2f %6.2f %6.2f" % (self.a,self.alpha,self.beta,self.b,self.c,self.d))
+        print("%6.2f %6.2f %6.2f %6.2f %6.2f %6.2f" % (self.a,self.alpha,self.beta,self.b,self.c,self.g))
 
     def calc(self,distance,theta,dt):
 
@@ -85,8 +85,8 @@ class Optimal_Velocity_class:
         self.v = self.v + dt*a
         self.omega = self.omega + dt*self.a*(theta-self.omega)
 
-        left  = self.v + self.d *self.omega
-        right = self.v - self.d *self.omega 
+        left  = self.v + self.g *self.omega
+        right = self.v - self.g *self.omega 
 
         # |left|<1, |right|<1 に規格化
         left = left/(2.0*self.alpha*(1+self.c))
