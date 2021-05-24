@@ -1,4 +1,4 @@
-このレポジトリは，2ホイール，またはスキッドステアロボットのための自律走行プログラムを開発するためのものです．
+このレポジトリは，2ホイール，または[スキッドステアロボット](https://github.com/HondaLab/SSR2)のための自律走行プログラムを開発するためのものです．
 
 <img src='https://github.com/HondaLab/2D_OVTurning/blob/honda/SSR2.JPG' width=600>
 
