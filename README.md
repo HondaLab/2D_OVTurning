@@ -22,4 +22,4 @@
   * stop.py: ロボットの緊急停止
   
 ## ライセンス
-[CC BY-SA](https://creativecommons.org/licenses/by-sa/3.0/deed.ja)
+[CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/deed.ja)
