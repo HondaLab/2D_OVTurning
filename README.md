@@ -20,6 +20,9 @@
   * ovt.py: Optimal Velocity Turning のクラス記述
   * parm.csv: OV model パラメータ
   * stop.py: ロボットの緊急停止
+
+## 実行結果例
+<img src='https://github.com/HondaLab/2D_OVTurning/blob/honda/result.png' width=600>
   
 ## ライセンス
 [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/deed.ja)
