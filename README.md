@@ -19,18 +19,22 @@
 ```
 dist,theta,frame=picam.calc_dist_theta(xxx,yyy)
 ```
-の部分がそれに当たります，下記ではdistのことをdと略記します．
+の部分がそれに当たります．
+下記に dist, theta から 左右のモーター出力 vL, vRを求めるアルゴリズムを示します．
+ここではdistのことをdと略記します．
   * f = alpha[tanh{beta(d-b)}+c]
   * V = (1+cos theta) f
   * v' = v + a(V-v)
   * omega' = omega + a(theta - omega)
   * vL = v + r g omega  
   * vR = v - r g omega
-  * g: スリップを考慮したゲイン
+   
+   
+gはホイールのスリップを考慮したゲインです．
+f が最適速度の大きさです．最適速度の方向はthetaです．
 
-vL,vRの値が左右のモーターに与える出力値．
 
-## 構成
+## プログラムの構成
   * run.py: このプログラムを実行する
   * picam.py: picameraでd,thetaを求めるクラス記述
   * modules/: motor5a.py など
