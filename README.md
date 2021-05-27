@@ -32,7 +32,15 @@ dist,theta,frame=picam.calc_dist_theta(xxx,yyy)
    
 gはホイールのスリップを考慮したゲインです．
 f が最適速度の大きさです．最適速度の方向はthetaです．
+alpha,beta,a,b,c,g は調整可能なパラメータです．
 
+## パラメータの意味と典型的な値．
+### alpha
+### beta
+### a(感応度)
+### b(期待車間距離)
+### c
+### g
 
 ## プログラムの構成
   * run.py: このプログラムを実行する
