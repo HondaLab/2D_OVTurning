@@ -14,8 +14,12 @@
 <img src='https://github.com/HondaLab/2D_OVTurning/blob/honda/OVTurning.JPG' width=600>
 
 ロボットの前面にあるPicameraによって，dとthetaを観測します．
-それらの値を使って，
-  * d,theta=picam.calc_dist_theta()
+[プログラム run.py](https://github.com/HondaLab/2D_OVTurning/blob/main/run.py)のなかで，
+
+```
+dist,theta,frame=picam.calc_dist_theta(xxx,yyy)
+```
+の部分がそれに当たります，下記ではdistのことをdと略記します．
   * f = alpha[tanh{beta(d-b)}+c]
   * V = (1+cos theta) f
   * v' = v + a(V-v)
