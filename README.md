@@ -8,11 +8,13 @@
 
 
 ## Optimal Velocity Turning Algorithm (OVT)
-速度ベクトルを，速度の大きさ v と 旋回角速度 omegaで表す．
+このアルゴリズムでは，
+速度を，速度の大きさ v と 旋回角速度 omegaで表すことにします．
 
 <img src='https://github.com/HondaLab/2D_OVTurning/blob/honda/OVTurning.JPG' width=600>
 
-Picameraによる観測値は，dist, theta．
+ロボットの前面にあるPicameraによって，dとthetaを観測します．
+それらの値を使って，
   * d,theta=picam.calc_dist_theta()
   * f = alpha[tanh{beta(d-b)}+c]
   * V = (1+cos theta) f
