@@ -1,8 +1,6 @@
 #! /usr/bin/python3
-#  run.py CC BY-SA Yasushi Honda 2021 5/23
-#  2dovr_210513.py
-#  2021-04-16
-#  Masashi Yamada
+#  run.py Yasushi Honda 2021 5/23
+#  2021-04-16 Masashi Yamada
 
 #  各モジュールインポート
 import csv
@@ -28,10 +26,6 @@ select_hsv = "y"
 show_period = 0.1
 output_file="result.xy"
 
-SLEEP = 0.2
-EX_TIME = 3    #  (min)
-BUS = 1         # bus number
-I2C_ADDR = 0x54 #I2Cアドレス
 GPIO_L = 17     #  左モーターのgpio 17番
 GPIO_R = 18     #  右モーターのgpio 18番
 MAX_SPEED = 50  # パーセント
@@ -40,7 +34,6 @@ dt = DT # dtは毎回観測する
 
 #  パラメータ記載のファイルの絶対パス
 FILE = "parm.csv" 
-
 
 #  実験パラメータ読み込み
 def Parameter_read(file_path):
@@ -58,7 +51,8 @@ def Parameter_read(file_path):
             tmp.append(float(row[4]))
             tmp.append(float(row[5]))
     return tmp
-#  物体未認識時のhyperbolic-tan
+
+#  tanh関数による感覚運動写像
 def tanh(x):
     """
     alpha=30.0
@@ -82,14 +76,15 @@ parm = []
 file_pointer = open(FILE,'r')
 parm = Parameter_read(file_pointer)
 
-#  インスタンス生成
-ovt = OVT.Optimal_Velocity_class(parm)         #  2次元最適速度モデル関係
 #tofR,tofL,tofC=lidar.start() #  赤外線レーザ(3)
 tofL,tofR=lidar.start()       #  赤外線レーザ(2)
 print("VL53L0X 接続完了\n")
 #time.sleep(2)
 picam =PICAM_py.PI_CAMERA_CLASS() 
 print("picamera 接続完了\n")
+
+#  Optimal Velocity Turning インスタンス生成
+ovt = OVT.Optimal_Velocity_class(parm) 
 
 out=open(output_file,"w")
 
