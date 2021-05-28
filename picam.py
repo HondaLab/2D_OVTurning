@@ -16,16 +16,13 @@ import socket
 #import socket1a as sk
 
 
-#  定数を定義
-MY_IP = "172.16.7.42"
-
-
 class PI_CAMERA_CLASS():
    def __init__(self):
       #self.udp = sk.UDP_Send(MY_IP, sk.PICAM_PORT)
       self.show_res='y'    # y(es)/n(o) 結果を表示(print)するかどうか
       self.PERIOD=0.01 #FPSですね
       
+      # 2020年荒くんの研究から
       self.A = 644.3
       self.B = -25.19
       self.C = 0.6182
@@ -46,13 +43,11 @@ class PI_CAMERA_CLASS():
       #print(cam.exposure_compensation)
 
       self.cam.awb_mode='auto'
-      
-      self.cam.awb_mode='auto'
       #   #Auto White Balance :list_awb = ['off', 'auto', 'sunlight', 'cloudy', 'shade']
       self.cam.iso=800
       self.cam.shutter_speed=1000000
       self.cam.exposure_mode = 'off' # off, auto, fixedfps
-      time.sleep(3)
+      time.sleep(1)
       self.g = self.cam.awb_gains
       self.cam.awb_mode = 'off'
       self.cam.awb_gains = self.g
@@ -86,6 +81,7 @@ class PI_CAMERA_CLASS():
          rects.append(np.array(rect))
     
       if len(rects) > 0:
+         # 最大のオブジェクトを選ぶ
          rect = max(rects, key=(lambda x: x[2] * x[3]))
          cv2.rectangle(frame, tuple(rect[0:2]), tuple(rect[0:2] + rect[2:4]), (0, 0, 255), thickness=2)
          self.data=list(rect)
@@ -110,9 +106,12 @@ class PI_CAMERA_CLASS():
       else: #red cup not capture
          dis = None
          rad = None
+
       self.rawCapture.truncate(0) # clear the stream for next frame
+
       return dis, rad, frame
 
+# 色検出するためのオブジェクトを選ぶ
    def calc_hsv(self):
       tmp = self.cam.capture_continuous(self.rawCapture, format="bgr", use_video_port="True")
       cap = next(tmp)
@@ -122,7 +121,6 @@ class PI_CAMERA_CLASS():
       hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
       bbox = (0,0,10,10)
       bbox = cv2.selectROI(frame, False)
-      #ok = tracker.init(frame, bbox)
       #print(bbox)
       x=int(bbox[0]+bbox[2]/2)
       y=int(bbox[1]+bbox[3]/2)

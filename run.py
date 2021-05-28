@@ -83,8 +83,6 @@ print("VL53L0X 接続完了\n")
 picam =PICAM_py.PI_CAMERA_CLASS() 
 print("picamera 接続完了\n")
 
-#  Optimal Velocity Turning インスタンス生成
-ovt = OVT.Optimal_Velocity_class(parm) 
 
 out=open(output_file,"w")
 
@@ -110,7 +108,11 @@ now = time.time()
 start = now
 init=now
 
+#  Optimal Velocity Turning インスタンス生成
+ovt = OVT.Optimal_Velocity_class(parm) 
+
 vl=0; vr=0
+print("# MAX_SPEED=%5d (percent)" % MAX_SPEED)
 
 print("停止するためには 'q' を押してください")
 print("#  time",end="")
@@ -127,56 +129,66 @@ string+="      vr \n"
 out.write(string)
 key=cv2.waitKey(1)
 while key!=ord("q"):
-    dist,theta,frame = picam.calc_dist_theta(lower_light, upper_light)
-    count = count + 1
-    if dist != None:
-        mode = "picam"
-        dist = float(dist)
-        # pixyカメラで物体を認識している時
-        vl, vr = ovt.calc(dist,theta,dt)
-
-    else:
-        pass
-        """
-        mode = "VL53L0X"
-        #print(mode)
-        lidar_distanceL=tofL.get_distance()
-        if lidar_distanceL>2000:
-            lidar_distanceL=2000
-          
-        lidar_distanceR=tofR.get_distance()
-        if lidar_distanceR>2000:
-            lidar_distanceR=2000
-
-        vr = tanh(lidar_distanceL)
-        vl = tanh(lidar_distanceR)
-        print("\r %s v_L=%6.2f v_R=%6.2f" % (mode,vl,vr),end="")
-        """
-
     last = now
     now = time.time()
     dt = now-last
-    if now-init>show_period and dist!=None and theta!=None:
-    #if vl>1 or vl<-1 or vr>1 or vr<-1 :
-        init=now
-        print("\r %6.3f %6d" % (now-start,int(1/dt)),end="")
-        #print(" %s " % mode,end="")
-        print(" %6.2f " % dist, end="")
-        print(" %6.2f " % theta, end="")
-        #print(" %8.4f " % d_theta, end="")
-        print(" %6.2f " % vl, end="")
-        print(" %6.2f " % vr, end="")
-        print(" %7.3f " % (vl/vr),end="")
 
-        string="{0:6.2f}, ".format(now-start)
-        string+="{0:6.3f}, ".format(dist)
-        string+="{0:6.3f}, ".format(theta)
-        string+="{0:6.3f}, ".format(vl)
-        string+="{0:6.3f}\n".format(vr)
-        out.write(string)
+    dist,theta,frame = picam.calc_dist_theta(lower_light, upper_light)
+    count = count + 1
+    if dist==None:
+       vl=1.0
+       vr=1.0
+       if now-init>show_period :
+          print("\r %6.3f %6d" % (now-start,int(1/dt)),end="")
+          print("   None",end="")
+          print("     - ",end="")
+          print(" %6.2f " % vl, end="")
+          print(" %6.2f " % vr, end="")
+          print(" %7.3f " % (vl/vr),end="")
+    else:
+       mode = "picam"
+       dist = float(dist)
+       # pixyカメラで物体を認識している時
+       vl, vr = ovt.calc(dist,theta,dt)
+
+       if now-init>show_period :
+          init=now
+          print("\r %6.3f %6d" % (now-start,int(1/dt)),end="")
+          print(" %6.2f " % dist, end="")
+          print(" %6.2f " % theta, end="")
+          #print(" %8.4f " % d_theta, end="")
+          print(" %6.2f " % vl, end="")
+          print(" %6.2f " % vr, end="")
+          print(" %7.3f " % (vl/vr),end="")
+
+          string="{0:6.2f}, ".format(now-start)
+          string+="{0:6.3f}, ".format(dist)
+          string+="{0:6.3f}, ".format(theta)
+          string+="{0:6.3f}, ".format(vl)
+          string+="{0:6.3f}\n".format(vr)
+          out.write(string)
+
+
+    # 障害物に対する感覚運動写像
+    """
+    mode = "VL53L0X"
+    lidar_distanceL=tofL.get_distance()
+    if lidar_distanceL>2000:
+        lidar_distanceL=2000
+        
+    lidar_distanceR=tofR.get_distance()
+    if lidar_distanceR>2000:
+        lidar_distanceR=2000
+
+    vr = tanh(lidar_distanceL)
+    vl = tanh(lidar_distanceR)
+    print("\r %s v_L=%6.2f v_R=%6.2f" % (mode,vl,vr),end="")
+    """
+
 
     vl = vl * MAX_SPEED
     vr = vr * MAX_SPEED
+
     if vl > 100:  # 左モータに対する
         vl =100   # 閾値処理
     if vl < -100: # -1 < v_l < 1
@@ -187,14 +199,15 @@ while key!=ord("q"):
     if vr < -100: # -1 < v_r < 1
         vr = -100 #
 
-    if dist!=None and theta!=None:
-       mL.run(vl)
-       mR.run(vr)
+    # モーターへ出力
+    mL.run(vl)
+    mR.run(vr)
 
-
+    # カメラ画像表示
     cv2.imshow("frame",frame)
     key=cv2.waitKey(1)
     #time.sleep(DT)
+
 
 mR.stop()
 mL.stop()
