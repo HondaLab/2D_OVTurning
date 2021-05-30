@@ -26,8 +26,8 @@ dist,theta,frame=picam.calc_dist_theta(xxx,yyy)
   * V = (1+cos theta) f
   * v' = v + a(V-v)
   * omega' = omega + a(theta - omega)
-  * vL = v + r g omega  
-  * vR = v - r g omega
+  * vL = v’ + r g omega’  
+  * vR = v’ - r g omega’
    
    
 gはホイールのスリップを考慮したゲインです．
